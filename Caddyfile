@@ -1,0 +1,13 @@
+{$DOMAIN} {
+	encode gzip
+	# challenge file uploads may be large; everything else stays small
+	@upload path_regexp ^/api/events/[^/]+/manage/challenges/[0-9]+/files$
+	@other not path_regexp ^/api/events/[^/]+/manage/challenges/[0-9]+/files$
+	request_body @upload {
+		max_size 55MB
+	}
+	request_body @other {
+		max_size 1MB
+	}
+	reverse_proxy app:8000
+}

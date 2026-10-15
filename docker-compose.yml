@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ctf
+      POSTGRES_DB: ctf
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    networks: [backend]
+    restart: unless-stopped
+
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://ctf:${DB_PASSWORD}@db:5432/ctf
+      FLAG_PEPPER: ${FLAG_PEPPER:?set FLAG_PEPPER in .env}
+      SECRET_KEY: ${SECRET_KEY:?set SECRET_KEY in .env}
+      ALLOWED_HOSTS: ${DOMAIN}
+      ORGANISER_MFA: ${ORGANISER_MFA:-required}
+      UPLOAD_DIR: /data/uploads
+      SITE_NAME: ${SITE_NAME:-Gh057 CTF}
+      MAX_UPLOAD_MB: "50"
+    volumes: [uploads:/data/uploads]   # challenge files organisers attach
+    tmpfs: [/tmp]                      # multipart uploads spool here
+    depends_on: [db]
+    networks: [backend, edge]   # not published to the host; only Caddy reaches it
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    networks: [edge]
+    restart: unless-stopped
+
+networks:
+  backend: { internal: true }   # the database has no route to the internet
+  edge: {}
+
+volumes:
+  uploads:
+  pgdata:
+  caddy_data:
