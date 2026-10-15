@@ -152,10 +152,10 @@ select.inp{appearance:none;background-image:linear-gradient(45deg,transparent 50
 .notes{position:fixed;top:70px;right:16px;z-index:90;display:grid;gap:10px;width:min(380px,calc(100vw - 32px))}
 .note{background:rgba(11,17,20,.97);border:1px solid var(--line-2);border-left:4px solid var(--ice);border-radius:8px;padding:12px 14px;
   box-shadow:0 14px 40px rgba(0,0,0,.55);animation:noteIn .45s var(--ease)}
-.note.ok{border-left-color:var(--ok)}
-.note.bad{border-left-color:var(--blood)}
-.note.first_blood{border-left-color:var(--blood);box-shadow:0 0 0 1px rgba(255,43,61,.35),0 14px 40px rgba(0,0,0,.55)}
-.note.announcement{border-left-color:var(--warn)}
+.note.tone-ok{border-left-color:var(--ok)}
+.note.tone-bad{border-left-color:var(--blood)}
+.note.k-first_blood{border-left-color:var(--blood);box-shadow:0 0 0 1px rgba(255,43,61,.35),0 14px 40px rgba(0,0,0,.55)}
+.note.k-announcement{border-left-color:var(--warn)}
 .note .nt{display:flex;align-items:center;gap:10px}
 .note .nt b{font:700 11px/1.2 var(--f-head);letter-spacing:.14em;text-transform:uppercase;flex:1;min-width:0}
 .note .nb{margin-top:6px;font-size:13px;line-height:1.45;color:#d4e0e4;overflow-wrap:anywhere}

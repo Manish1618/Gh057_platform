@@ -119,7 +119,7 @@ function showNotice(n, withSound) {
   let host = $(".notes");
   if (!host) { host = document.createElement("div"); host.className = "notes"; host.setAttribute("aria-live", "polite"); document.body.appendChild(host); }
   const el = document.createElement("div");
-  el.className = `note ${n.kind} ${k[1]}`;
+  el.className = `note k-${n.kind} tone-${k[1]}`; // prefixed: the theme already styles .hint, .ping, .ok
   el.setAttribute("role", "status");
   const pts = n.points ? `<span class="np ${n.points > 0 ? "pos" : "neg"}">${n.points > 0 ? "+" : ""}${n.points}</span>` : "";
   el.innerHTML = `<div class="nt"><b>${k[0]}</b>${pts}<button class="nx" type="button" aria-label="Dismiss">×</button></div><div class="nb">${k[2](n)}</div>`;
