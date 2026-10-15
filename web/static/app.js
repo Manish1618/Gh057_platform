@@ -1137,6 +1137,7 @@ function tabSettings(box, slug, getEv, setEv) {
 
 function tabLive(box, slug) {
   const base = `/api/events/${slug}/manage`;
+  box.classList.add("stack");
   box.innerHTML = `<div class="stats4" id="st"></div>
     <section class="cols">
       <div class="panel stack"><div class="sec-h"><h2>Announce to everyone</h2><span>Pops up with a sound for every player watching the event</span></div>
